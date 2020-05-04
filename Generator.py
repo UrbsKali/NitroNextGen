@@ -13,7 +13,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-print("@UrbsKali Nitro Code Next Generator v2.0 a\n")
+print("@UrbsKali Nitro Code Next Generator v2.0\n")
 
 print("Amount of workers to use at once? (don't be shy)")
 _THREADS = int(input("Threads: "))
@@ -27,6 +27,15 @@ start_time = time.time()
 
 def clearterminal():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def CodeNextGen():
+    peiceLenOne = 4
+    pieceLenTwo = 5
+    letter = "AZERTYUIOPQSDFGHJKLMWXCVBN0123456789"
+    separator = "-"
+    code = 'REV1-5FU3-HIBA-'+''.join(random.choice(letter) for i in range(pieceLenTwo))
+    #code = ''.join(random.choice(letter) for i in range(peiceLenOne)) + separator +''.join(random.choice(letter) for i in range(pieceLenTwo)) + separator +''.join(random.choice(letter) for i in range(pieceLenTwo)) + separator +''.join(random.choice(letter) for i in range(pieceLenTwo))
+    return code
 
 def codeGenerator():
     codeLen = 16
@@ -64,7 +73,7 @@ class masterThread(threading.Thread):
         raw_proxy = ""
         while True:
             try:
-                current_code = codeGenerator()
+                current_code = CodeNextGen()
 
                 url = 'https://discordapp.com/api/v6/entitlements/gift-codes/' + current_code + '?with_application=false&with_subscription_plan=true'
                 raw_proxy = getProxy()
@@ -74,11 +83,12 @@ class masterThread(threading.Thread):
                 response = s.get(url, proxies=proxy)
                 if 'subscription_plan' in response.text:
                     saveCode(current_code)
+                    nb = 1 + nb
                 elif 'Access denied' in response.text:
                     banProxy(raw_proxy)
                 else:
                     generation = generation + 1
-                    nb = generation + nb
+                    nb = 1 + nb
                     sleep(random.randrange(1,10))
             except ProxyError:
                 pass
