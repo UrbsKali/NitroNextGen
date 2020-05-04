@@ -1,6 +1,8 @@
 # Discord Nitro Generator
 A discord nitro generator made with python requests
 
+#WIP, don't use now !!!
+
 ##### Requirements:
   1. Python 3.6+
   2. Python Requests
