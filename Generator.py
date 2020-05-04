@@ -78,7 +78,7 @@ class masterThread(threading.Thread):
                     banProxy(raw_proxy)
                 else:
                     generation = generation + 1
-                    nb = generation
+                    nb = generation + nb
                     sleep(random.randrange(1,10))
             except ProxyError:
                 pass
