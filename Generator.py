@@ -13,13 +13,14 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-print("8qBIT's Nitro Code Generator v1.8a\n")
+print("@UrbsKali Nitro Code Next Generator v2.0 a\n")
 
-print("Amount of workers to use at once?")
+print("Amount of workers to use at once? (don't be shy)")
 _THREADS = int(input("Threads: "))
 
 os.environ["_THREADS"] = "0"
 generation = 0
+nb = 0
 banned = 0
 nitro_codes = 0
 start_time = time.time()
@@ -59,7 +60,7 @@ class masterThread(threading.Thread):
         threading.Thread.__init__(self)
         self.tasks = []
     def run(self):
-        global generation, banned, nitro_codes
+        global generation, banned, nitro_codes, nb
         raw_proxy = ""
         while True:
             try:
@@ -77,6 +78,7 @@ class masterThread(threading.Thread):
                     banProxy(raw_proxy)
                 else:
                     generation = generation + 1
+                    nb = generation
                     sleep(random.randrange(1,10))
             except ProxyError:
                 pass
@@ -97,11 +99,11 @@ class monitorThread(threading.Thread):
         threading.Thread.__init__(self)
         self.tasks = []
     def run(self):
-        global generation, banned, nitro_codes, proxies
+        global generation, banned, nitro_codes, proxies, nb
         while True:
             try:
                 clearterminal()
-                window = " <---------> GENERATOR MONITOR <--------->\n\n" + " Gen/s: " + bcolors.WARNING + str(generation) + bcolors.ENDC + " | Active Threads: " + bcolors.OKGREEN + os.environ["_THREADS"] + bcolors.ENDC + "\n Bad Proxies: " + bcolors.FAIL + str(banned) + bcolors.ENDC + " | Active Proxies: " + bcolors.OKGREEN + str(len(proxies)) + bcolors.ENDC + "\n Nitro Codes Found: " + bcolors.OKGREEN + str(nitro_codes) + bcolors.ENDC + " | Runtime: " + bcolors.OKBLUE + getRuntime() + bcolors.ENDC +"\n\n <--------------------------------------->"
+                window = " <---------> GENERATOR MONITOR <--------->\n\n" + " Gen/s: " + bcolors.WARNING + str(generation) + bcolors.ENDC + " | Active Threads: " + bcolors.OKGREEN + os.environ["_THREADS"] + bcolors.ENDC + "\n Bad Proxies: " + bcolors.FAIL + str(banned) + bcolors.ENDC + " | Active Proxies: " + bcolors.OKGREEN + str(len(proxies)) + bcolors.ENDC + "\n Nitro Codes Found: " + bcolors.OKGREEN + str(nitro_codes) + bcolors.ENDC + " | Runtime: " + bcolors.OKBLUE + getRuntime() + bcolors.ENDC + "\n Codes Tested: " + bcolors.OKGREEN + str(nb) + bcolors.ENDC +"\n\n <--------------------------------------->"
                 print(window)
                 generation = 0
                 sleep(1)
