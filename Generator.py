@@ -3,6 +3,13 @@ from time import sleep
 import os.path
 from requests.exceptions import ProxyError, SSLError, ConnectionError, InvalidProxyURL
 
+from numba import vectorize
+
+@vectorize(['float32(float32, float32)'], target='cuda')
+def pow(a, b):
+    return a ** b
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -13,7 +20,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-print("@UrbsKali Nitro Code Next Generator v2.0\n")
+print("  _   _ _ _                ____          _        _   _           _    ____            \n | \ | (_) |_ _ __ ___    / ___|___   __| | ___  | \ | | _____  _| |_ / ___| ___ _ __  \n |  \| | | __| '__/ _ \  | |   / _ \ / _` |/ _ \ |  \| |/ _ \ \/ / __| |  _ / _ \ '_ \ \n | |\  | | |_| | | (_) | | |__| (_) | (_| |  __/ | |\  |  __/>  <| |_| |_| |  __/ | | |\n |_| \_|_|\__|_|  \___/   \____\___/ \__,_|\___| |_| \_|\___/_/\_\___|\____|\___|_| |_|\n                                                        Made By @UrbsKali, version 2.0 ")
 
 print("Amount of workers to use at once? (don't be shy)")
 _THREADS = int(input("Threads: "))
@@ -81,7 +88,7 @@ class masterThread(threading.Thread):
 
                 s = requests.session()
                 response = s.get(url, proxies=proxy)
-                if 'subscription_plan' in response.text:
+                if 'application_id' in response.text:
                     saveCode(current_code)
                     nb = 1 + nb
                 elif 'Access denied' in response.text:
